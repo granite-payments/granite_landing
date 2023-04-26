@@ -104,8 +104,8 @@
     let targetX = 0;
     let targetY = 0;
     const easing = 0.05;
-    const numVertices = 200;
-    const maxOffset = 50;
+    const numVertices = 100;
+    const maxOffset = 250;
 
     p.setup = () => {
       p.createCanvas(window.innerWidth, window.innerHeight);
@@ -123,11 +123,25 @@
       cursorX += dx * easing;
       cursorY += dy * easing;
 
-      p.fill(255, 150, 200, 150);
+      // Draw the swirl smoke effect
+      for (let x = 0; x < p.width; x += 10) {
+        for (let y = 0; y < p.height; y += 10) {
+          const distance = p.dist(cursorX, cursorY, x, y);
+          const noiseVal = p.noise(x * 0.01 + p.random(-1, 1), y * 0.01 + p.random(-1, 1), p.frameCount * 0.01);
+          const radius = p.map(noiseVal, 0, 1, 2, 60);
+          const opacity = p.map(distance, 0, 300, 150, 0);
+
+          p.fill(255, 150, 150, opacity);
+          p.ellipse(x, y, radius);
+        }
+      }
+
+      // Draw the amorphous blob
+      p.fill(255, 150, 150, 150);
       p.beginShape();
       for (let i = 0; i < numVertices; i++) {
         const angle = p.map(i, 0, numVertices, 0, p.TWO_PI);
-        const r = maxOffset * p.noise(i * 0.1 + p.frameCount * 0.02, angle * 0.1 + p.frameCount * 0.02);
+        const r = maxOffset * p.noise(i * 0.05 + p.frameCount * 0.01, angle * 0.05 + p.frameCount * 0.01);
         const x = cursorX + r * p.cos(angle);
         const y = cursorY + r * p.sin(angle);
         p.vertex(x, y);
