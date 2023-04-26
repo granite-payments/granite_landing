@@ -143,8 +143,8 @@
       cursorY += dy * easing;
 
       // Draw the swirl smoke effect
-      for (let x = 0; x < p.width; x += 10) {
-        for (let y = 0; y < p.height; y += 10) {
+      for (let x = 0; x < p.width*3; x += 30) {
+        for (let y = 0; y < p.height*3; y += 30) {
           const distance = p.dist(cursorX, cursorY, x, y);
           const noiseVal = p.noise(x * 0.01 + p.random(-1, 1), y * 0.01 + p.random(-1, 1), p.frameCount * 0.002);
           const radius = p.map(noiseVal, 0, 1, 5, 50);
