@@ -71,6 +71,23 @@
       pointer-events: none;
     }
 
+    /* Add a new CSS class for the Google Form iframe */
+    .google-form {
+      width: 100%;
+      max-width: 640px;
+      height: 683px;
+      border: none;
+      margin: 0 auto;
+    }
+
+    /* Add media query for smaller screens */
+    @media (max-width: 767px) {
+      .google-form {
+        height: 1100px;
+      }
+    }
+
+
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
 </head>
@@ -92,8 +109,10 @@
       </section>
       <div class="cta-wrapper">
         <h2>sign up for the waitlist_</h2>
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSekEEecP05M4OQivwFq69-UscswbUHhyKI7Il34h6WEDb0VNQ/viewform?embedded=true" width="640" height="683" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
-      </div>
+        
+        <iframe class="google-form" src="https://docs.google.com/forms/d/e/1FAIpQLSekEEecP05M4OQivwFq69-UscswbUHhyKI7Il34h6WEDb0VNQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
+        </div>
     </div>
   </main>
 <script>
@@ -128,7 +147,7 @@
         for (let y = 0; y < p.height; y += 10) {
           const distance = p.dist(cursorX, cursorY, x, y);
           const noiseVal = p.noise(x * 0.01 + p.random(-1, 1), y * 0.01 + p.random(-1, 1), p.frameCount * 0.002);
-          const radius = p.map(noiseVal, 0, 1, 10, 200);
+          const radius = p.map(noiseVal, 0, 1, 5, 50);
           const opacity = p.map(distance, 0, 200, 75, 0);
 
           p.fill(255, 150, 150, opacity);
