@@ -28,10 +28,8 @@
       color: #ff9696;
     }
 
-    .api-button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
+    .api-button,
+    .sign-up-button { /* Updated for consistency */
       padding: 10px;
       background-color: #f4f4f4;
       color: black;
@@ -39,6 +37,12 @@
       border-radius: 5px;
       border: none;
       cursor: pointer;
+    }
+
+    .api-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
     }
 
     .container {
@@ -74,14 +78,15 @@
       text-decoration: none;
       color: #1f2729;
     }
-
+    
     .cta-wrapper {
       display: flex;
       justify-content: center;
       flex-direction: column;
       align-items: center;
+      margin-bottom: 4rem; /* Adjust this value as needed for more space */
     }
-    
+
     #smoke-container {
       position: fixed;
       top: 0;
@@ -90,22 +95,6 @@
       height: 100%;
       z-index: -1;
       pointer-events: none;
-    }
-
-    /* Add a new CSS class for the Google Form iframe */
-    .google-form {
-      width: 100%;
-      max-width: 640px;
-      height: 683px;
-      border: none;
-      margin: 0 auto;
-    }
-
-    /* Add media query for smaller screens */
-    @media (max-width: 767px) {
-      .google-form {
-        height: 1100px;
-      }
     }
 
     footer {
@@ -136,82 +125,78 @@
         <p>Automatically flag riskier transactions and offer step up authentication paths</p>
       </section>
       <div class="cta-wrapper">
-        <h2>sign up_</h2>
-        
-        <!-- <iframe class="google-form" src="https://docs.google.com/forms/d/e/1FAIpQLSekEEecP05M4OQivwFq69-UscswbUHhyKI7Il34h6WEDb0VNQ/viewform?embedded=true" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> -->
-        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSf9lBn2apCGfAtGsjW77RQY4BM-U9uOxcBB-5-GwDOthz5OgQ/viewform?embedded=true" width="720" height="1200" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        <!-- Removed iframe and replaced header with button -->
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSf9lBn2apCGfAtGsjW77RQY4BM-U9uOxcBB-5-GwDOthz5OgQ/viewform?usp=sf_link" class="cta">sign up_</a>
       </div>
     </div>
   </main>
-<script>
-  const smokeContainer = document.getElementById("smoke-container");
-  const sketch = (p) => {
-    let cursorX = 0;
-    let cursorY = 0;
-    let targetX = 0;
-    let targetY = 0;
-    const easing = 0.05;
-    const numVertices = 100;
-    const maxOffset = 350;
-
-    p.setup = () => {
-      p.createCanvas(window.innerWidth, window.innerHeight);
-      p.smooth();
-      p.noStroke();
-      p.frameRate(24);
-    };
-
-    p.draw = () => {
-      p.background("#1f2729");
-
-      // Update the cursor position smoothly
-      const dx = targetX - cursorX;
-      const dy = targetY - cursorY;
-      cursorX += dx * easing;
-      cursorY += dy * easing;
-
-      // Draw the swirl smoke effect
-      for (let x = 0; x < p.width; x += 10) {
-        for (let y = 0; y < p.height; y += 10) {
-          const distance = p.dist(cursorX, cursorY, x, y);
-          const noiseVal = p.noise(x * 0.02 + p.random(-1, 1), y * 0.02 + p.random(-1, 1), p.frameCount * 0.002);
-          const radius = p.map(noiseVal, 0, 1, 5, 50);
-          const opacity = p.map(distance, 0, 200, 75, 0);
-
-          p.fill(255, 150, 150, opacity);
-          p.ellipse(x, y, radius);
+  <script>
+    const smokeContainer = document.getElementById("smoke-container");
+    const sketch = (p) => {
+      let cursorX = 0;
+      let cursorY = 0;
+      let targetX = 0;
+      let targetY = 0;
+      const easing = 0.05;
+      const numVertices = 100;
+      const maxOffset = 350;
+  
+      p.setup = () => {
+        p.createCanvas(window.innerWidth, window.innerHeight);
+        p.smooth();
+        p.noStroke();
+        p.frameRate(24);
+      };
+  
+      p.draw = () => {
+        p.background("#1f2729");
+  
+        // Update the cursor position smoothly
+        const dx = targetX - cursorX;
+        const dy = targetY - cursorY;
+        cursorX += dx * easing;
+        cursorY += dy * easing;
+  
+        // Draw the swirl smoke effect
+        for (let x = 0; x < p.width; x += 10) {
+          for (let y = 0; y < p.height; y += 10) {
+            const distance = p.dist(cursorX, cursorY, x, y);
+            const noiseVal = p.noise(x * 0.02 + p.random(-1, 1), y * 0.02 + p.random(-1, 1), p.frameCount * 0.002);
+            const radius = p.map(noiseVal, 0, 1, 5, 50);
+            const opacity = p.map(distance, 0, 200, 75, 0);
+  
+            p.fill(255, 150, 150, opacity);
+            p.ellipse(x, y, radius);
+          }
         }
-      }
-
-      // Draw the amorphous blob
-      p.fill(255, 150, 150, 100);
-      p.beginShape();
-      for (let i = 0; i < numVertices; i++) {
-        const angle = p.map(i, 0, numVertices, 0, p.TWO_PI);
-        const r = maxOffset * p.noise(i * 0.05 + p.frameCount * 0.01, angle * 0.05 + p.frameCount * 0.01);
-        const x = cursorX + r * p.cos(angle);
-        const y = cursorY + r * p.sin(angle);
-        p.vertex(x, y);
-      }
-      p.endShape(p.CLOSE);
+  
+        // Draw the amorphous blob
+        p.fill(255, 150, 150, 100);
+        p.beginShape();
+        for (let i = 0; i < numVertices; i++) {
+          const angle = p.map(i, 0, numVertices, 0, p.TWO_PI);
+          const r = maxOffset * p.noise(i * 0.05 + p.frameCount * 0.01, angle * 0.05 + p.frameCount * 0.01);
+          const x = cursorX + r * p.cos(angle);
+          const y = cursorY + r * p.sin(angle);
+          p.vertex(x, y);
+        }
+        p.endShape(p.CLOSE);
+      };
+  
+      p.windowResized = () => {
+        p.resizeCanvas(window.innerWidth, window.innerHeight);
+      };
+  
+      p.mouseMoved = (e) => {
+        targetX = e.clientX;
+        targetY = e.clientY;
+      };
     };
+  
+    new p5(sketch, smokeContainer);
+  </script>
 
-    p.windowResized = () => {
-      p.resizeCanvas(window.innerWidth, window.innerHeight);
-    };
 
-    p.mouseMoved = (e) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-    };
-  };
-
-  new p5(sketch, smokeContainer);
-</script>
-
-<footer>
-  <p>&copy; 2024 Lake22 Inc., d/b/a Granite Payments</p>
-</footer>
-
-</body>
-</html>
+  <footer>
+    <p>© 2024 Lake22 Inc. d/b/a Granite Payments</p>
+  </footer>
