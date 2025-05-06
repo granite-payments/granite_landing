@@ -21,6 +21,26 @@
       padding: 0;
       background-color: #1f2729;
     }
+
+    .banner {
+      background-color: #1434cb;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .banner a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    .banner a:hover {
+      color: #ff9696;
+    }
+
     h1,
     h2,
     h3 {
@@ -29,7 +49,7 @@
     }
 
     .api-button,
-    .sign-up-button { /* Updated for consistency */
+    .sign-up-button {
       padding: 10px;
       background-color: #f4f4f4;
       color: black;
@@ -37,11 +57,13 @@
       border-radius: 5px;
       border: none;
       cursor: pointer;
+      pointer-events: none;
+      opacity: 0.5;
     }
 
     .api-button {
       position: absolute;
-      top: 10px;
+      top: 60px;  /* Increased to account for banner height */
       right: 10px;
     }
 
@@ -71,12 +93,15 @@
       text-decoration: none;
       display: inline-block;
       margin-top: 1rem;
+      pointer-events: none;
+      opacity: 0.5;
     }
 
     .cta:hover {
       background-color: #ff7878;
       text-decoration: none;
       color: #1f2729;
+      pointer-events: none;
     }
     
     .cta-wrapper {
@@ -108,6 +133,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
 </head>
 <body>
+  <div class="banner">
+    <a href="https://developer.visa.com/capabilities/visa-intelligent-commerce/overview" target="_blank">Learn more about Visa Intelligent Commerce</a>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
   <div id="smoke-container"></div>
   <header>
